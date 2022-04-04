@@ -23,6 +23,22 @@ let rerollType;
 let modNum;
 let modType;
 
+let useRollCommand = false;
+
+function setUseRollCommand() {
+    useRollCommand = document.getElementById("useRollCommand").checked;
+
+    if (useRollCommand) {
+        document.getElementById("rollCommand").removeAttribute('disabled')
+        document.getElementById("setup").classList.remove("border-focus")
+        document.getElementById("rollCommand").classList.add("border-focus")
+    } else {
+        document.getElementById("rollCommand").setAttribute('disabled', 'disabled')
+        document.getElementById("setup").classList.add("border-focus")
+        document.getElementById("rollCommand").classList.remove("border-focus")
+    }
+}
+
 function applyValues() {
     diceToRoll = (document.getElementById('diceToRoll').value >= 1) ? document.getElementById('diceToRoll').value : 1;
 
@@ -61,9 +77,12 @@ function formatResults(resultArray) {
 function rollTheDice() {
     document.getElementById('result').classList.remove("error");
     document.getElementById('result').classList.remove("result");
-    applyValues();
 
-    document.getElementById('rollCommand').value = diceToRoll + faces + keepType + keepNum + dropType + dropNum + rerollType + rerollNum + modType + modNum;
+    if (!useRollCommand) {
+        applyValues();
+
+        document.getElementById('rollCommand').value = diceToRoll + faces + keepType + keepNum + dropType + dropNum + rerollType + rerollNum + modType + modNum;
+    }
   
     let rollLine = breakRollString(document.getElementById('rollCommand').value);
 
