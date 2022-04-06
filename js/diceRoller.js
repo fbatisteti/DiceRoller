@@ -1,11 +1,11 @@
 function numOnly (text) {
-    return (text[0] == '-') ? ('-' + text.replace(/\D/g, "") ) : text.replace(/\D/g, "") 
-}
+    return parseInt((text[0] == '-') ? ('-' + text.replace(/\D/g, "") ) : text.replace(/\D/g, ""));
+};
 
 function breakRollString(roll = '') {
     roll = roll.toLowerCase();
 
-    let aux = ['kh', 'kl', 'dh', 'dl', 'ro', 'ru']
+    let aux = ['kh', 'kl', 'dh', 'dl', 'ro', 'ru'];
 
     let output = {
         diceToRoll: '',
@@ -17,7 +17,7 @@ function breakRollString(roll = '') {
         ro: '',
         ru: '',
         mod: ''
-    }
+    };
 
     // Checking if roll command is valid
         // Command wil be valid if it contains 'd'
@@ -52,11 +52,11 @@ function breakRollString(roll = '') {
             for (let i = 0; i < aux.length; i++) {
                 aux[i] = adds.slice(adds.indexOf(aux[i]) + 2);
                 aux[i] = (aux[i].search(/\D/) == -1) ? aux[i] : aux[i].slice(0, aux[i].search(/\D/));
-            }
+            };
         
             for (let i = 0; i < aux.length; i++) {
                 if (aux[i] < 0) {return 'An error has occurred: One or more negative values found on keep, discard and/or re-roll';};
-            }
+            };
         
             output.kh = aux[0];
             output.kl = aux[1];
@@ -83,12 +83,12 @@ function breakRollString(roll = '') {
         if (!Number.isInteger(Number(modinc)) || !Number.isInteger(Number(moddec))) {return 'An error has occurred: Modifier is not an integer';};
 
         output.mod = modinc - moddec;
-    } 
+    };
 
     return output;
-}
+};
 
-function rollDice(diceToRoll, faces, kh, kl, dh, dl, ro, ru, mod) {
+function rollDice(diceToRoll, faces, kh, kl, dh, dl, ro, ru) {
     // set values
     (diceToRoll == '') ? diceToRoll = 1 : diceToRoll = diceToRoll;
     (faces == '') ? faces = 20 : faces = faces;
@@ -98,59 +98,83 @@ function rollDice(diceToRoll, faces, kh, kl, dh, dl, ro, ru, mod) {
     (dl == '') ? dl = 0 : dl = dl;
     (ro == '') ? ro = faces : ro = ro;
     (ru == '') ? ru = 0 : ru = ru;
-    (mod == '') ? mod = 0 : mod = mod;
 
     // Roll the dice
-    let rollResults = []
+    let allResults = {
+        originalRolls: [],
+        rerolls: [],
+        keeps: [],
+        drops: [],
+        finalRolls:[]
+    };
 
     for (let i = 0; i < diceToRoll; i++) {
-        rollResults.push(Math.floor(Math.random() * faces)+1);
-    }
+        allResults.originalRolls.push(Math.floor(Math.random() * faces)+1);
+        allResults.finalRolls[i] = allResults.originalRolls[i];
+        allResults.rerolls[i] = 0;
+        allResults.keeps[i] = 0;
+        allResults.drops[i] = 0;
+    };
 
     // Re-roll overs and unders
-    for (let i = 0; i < rollResults.length; i++) {
-        if (rollResults[i] > ro) {
-            rollResults[i] = Math.floor(Math.random() * faces)+1;
-            i--
-        }
-    }
-    for (let i = 0; i < rollResults.length; i++) {
-        if (rollResults[i] < ru) {
-            rollResults[i] = Math.floor(Math.random() * faces)+1;
-            i--
-        }
-    }
+    for (let i = 0; i < allResults.finalRolls.length; i++) {
+        if (allResults.finalRolls[i] > ro) {
+            allResults.finalRolls[i] = Math.floor(Math.random() * faces)+1;
+            allResults.rerolls[i] = 1;
+            i--;
+        };
+    };
 
-    // Keeps and drops
-    let high = kh - dh;
-    let low = kl - dl;
+    for (let i = 0; i < allResults.finalRolls.length; i++) {
+        if (allResults.finalRolls[i] < ru) {
+            allResults.finalRolls[i] = Math.floor(Math.random() * faces)+1;
+            allResults.rerolls[i] = 1;
+            i--;
+        };
+    };
+
+    /* Keeps and drops
+
+        This part can be troublesome when a command is issued with both keeps or drops, i.e. 5d20kh2kl2. This can only happen when the command line is used */
+    let keep = kh - kl;
+    let drop = dh - dl;
     let aux = [];
 
-    if (high > 0) {
-        // keep high
-        aux = rollResults.sort(function(a, b){return b - a});
-        rollResults = aux.slice(0, high);
-    } else {
-        // drop high
-        aux = rollResults.sort(function(a, b){return b - a});
-        rollResults = aux.slice(Math.abs(high));
-    }
+    // Keeps
+    if (keep != 0) {
+        aux = [...allResults.finalRolls];
+        aux = aux.sort(function(a, b){return a - b});
+        aux = (keep > 0) ? aux.slice(aux.length - keep) : aux.slice(0, Math.abs(keep));
 
-    if (low > 0) {
-        // keep low
-        aux = rollResults.sort(function(a, b){return a - b});
-        rollResults = aux.slice(0, low);
-    } else {
-        // drop low
-        aux = rollResults.sort(function(a, b){return a - b});
-        rollResults = aux.slice(Math.abs(low));
-    }
+        for (let i = 0; i < aux.length; i++) {
+            let pos = getKeepIndex(allResults.finalRolls, allResults.keeps, aux[i]);
+            allResults.keeps[pos] = 1;
+        };
+    };
 
-    // Add modifiers
-    for (let i = 0; i < rollResults.length; i++) {
-        rollResults[i] += mod;
-    }
+    // Drops
+    if (drop != 0) {
+        aux = [...allResults.finalRolls];
+        aux = aux.sort(function(a, b){return a - b});
+        aux = (drop > 0) ? aux.slice(aux.length - drop) : aux.slice(0, Math.abs(drop));
 
-    return rollResults.sort(function(a, b){return a - b});
-}
+        for (let i = 0; i < aux.length; i++) {
+            let pos = getDropIndex(allResults.finalRolls, allResults.drops, aux[i]);
+            allResults.drops[pos] = 1;
+        };
+    };
 
+    return allResults;
+};
+
+function getKeepIndex(searchArray, keepAray, num) {
+    for (let pos = searchArray.length - 1; pos >= 0; pos--) {
+        if (searchArray[pos] == num && keepAray[pos] == 0) return pos;
+    };
+};
+
+function getDropIndex(searchArray, dropAray, num) {
+    for (let pos = 0; pos < searchArray.length; pos++) {
+        if (searchArray[pos] == num && dropAray[pos] == 0) return pos;
+    };
+};

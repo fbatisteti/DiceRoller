@@ -45,7 +45,6 @@
 
                             <div class="row">
                                 <div class="container border-focus" id="setup">
-
                                     <div class="row align-items-center justify-content-start">
                                         <div class="col-2">
                                             <h5 class="text1 ">Roll</h5>
@@ -69,7 +68,28 @@
                                         </div>  
 
                                         <div class="col-5">
-                                            <div id="diceToRollHelp" class="form-text text2">Roll N dices of the chosen type</div>
+                                            <div id="diceToRollHelp" class="form-text text2">Roll N dice of the chosen type</div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="row align-items-center justify-content-start">
+                                        <div class="col-2">
+                                            <h5 class="text1 ">Re-roll</h5>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="rerollType">
+                                                <option value="ru" selected>Under</option>
+                                                <option value="ro">Over</option>
+                                            </select>
+                                        </div>  
+
+                                        <div class="col-2">
+                                            <input type="number" min="0" class="form-control" id="rerollNum" aria-describedby="rerollHelp" placeholder="0">
+                                        </div> 
+
+                                        <div class="col-5">
+                                            <div id="rerollHelp" class="form-text text2">Re-roll all results under/over N</div>
                                         </div>  
                                     </div>
 
@@ -94,7 +114,7 @@
                                         </div>  
                                     </div>
 
-                                    <div class="row align-items-center justify-content-start">
+                                    <div class="row align-items-center justify-content-start hidden" id="dropMenu">
                                         <div class="col-2">
                                             <h5 class="text1 ">Drop</h5>
                                         </div>
@@ -117,27 +137,6 @@
 
                                     <div class="row align-items-center justify-content-start">
                                         <div class="col-2">
-                                            <h5 class="text1 ">Re-roll</h5>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="rerollType">
-                                                <option value="ru" selected>Under</option>
-                                                <option value="ro">Over</option>
-                                            </select>
-                                        </div>  
-
-                                        <div class="col-2">
-                                            <input type="number" min="0" class="form-control" id="rerollNum" aria-describedby="rerollHelp" placeholder="0">
-                                        </div> 
-
-                                        <div class="col-5">
-                                            <div id="rerollHelp" class="form-text text2">Re-roll results under/over N</div>
-                                        </div>  
-                                    </div>
-
-                                    <div class="row align-items-center justify-content-start">
-                                        <div class="col-2">
                                             <h5 class="text1 ">Modify</h5>
                                         </div>
 
@@ -153,7 +152,7 @@
                                         </div> 
 
                                         <div class="col-5">
-                                            <div id="modHelp" class="form-text text2">Add/subtract N from final results</div>
+                                            <div id="modHelp" class="form-text text2">Add/subtract N to/from final results</div>
                                         </div>  
                                     </div>
 
@@ -174,7 +173,7 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline" style="margin: 15px 0 0 0;">
                                         <input class="form-check-input" type="checkbox" id="useRollCommand" onchange="setUseRollCommand()">
                                         <label class="form-check-label" for="useRollCommand">
                                             Roll using command line
@@ -184,23 +183,79 @@
                             </div>
 
                             <div class="row" style="padding: 10px">
-                                
                                 <div class="d-grid gap-2">
                                     <button class="btn btn-primary btn-overlay" type="button" onclick="rollTheDice()">ROLL THE DICE</button>
                                 </div>
-
                             </div>
 
                             <div class="row" style="padding: 10px">
-                                
                                 <div class="title" style="margin-bottom: 0px;" id="result"></div>
-
                             </div>
 
                         </div>
 
                         <div class="col-3 box">
-                            Coming soon
+                            <div class="row">
+                                <label class="form-label">
+                                    <h3 class="text1">Settings</h3>
+                                </label>
+                            </div>
+
+                            <div clas="row">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="showAllRolls" onchange="setShowAllRolls()" checked>
+                                    <label class="form-check-label text1" for="showDroppped" id="showAllRollsHelp">Show all rolls</label>
+                                </div>
+                                <div class="row hidden" id="showAllRollsSwitch">
+                                    <div class="col-11 offset-1" >
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="showDropped" onchange="setShowDropped()">
+                                            <label class="form-check-label" for="showDroppped" id="showDroppedHelp">Show discarded rolls</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="showRerolled" onchange="setShowRerolled()">
+                                            <label class="form-check-label" for="showRerolled" id="showRerolledHelp">Show re-rolled rolls</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="highlightCritical" onchange="setHighlightCritical()">
+                                    <label class="form-check-label" for="highlightCritical" id="highlightCriticalHelp">Highlight critical rolls</label>
+                                </div>
+                                <div class="row hidden" id="highlightCriticalSwitch">
+                                    <div class="col-11 offset-1" >
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="highlightCriticalHigh" onchange="setHighlightCriticalHigh()">
+                                            <label class="form-check-label" for="highlightCriticalHigh" id="highlightCriticalHighHelp">Highest face</label>
+                                        </div>
+                                        <div class="form-check form-switch"> 
+                                            <input class="form-check-input" type="checkbox" role="switch" id="highlightCriticalLow" onchange="setHighlightCriticalLow()">
+                                            <label class="form-check-label" for="highlightCriticalLow" id="highlightCriticalLowHelp">Lowest face</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="form-label" style="margin-top: 20px;">
+                                    <h3 class="text1">Experimental</h3>
+                                </label>
+                            </div>
+
+                            <div clas="row">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="keepDrop" onchange="setKeepDrop()">
+                                    <label class="form-check-label" for="showDroppped" id="keepDropHelp">Add drop option</label>
+                                </div>
+                                <div class="row hidden" id="keepDropSwitch">
+                                    <div class="col-11 offset-1" >
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label">Using both keep and drop options may cause roll to be miscalculated</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,8 +266,10 @@
 
     </div>
 
-    <script src="main.js"></script>
-    <script src="diceroller.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/diceRoller.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/formatResult.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
