@@ -1,3 +1,5 @@
+/* \/ Generic stuff \/ */
+
 :root {
     --color1: #36213E;
     --color2: #554971;
@@ -8,30 +10,21 @@
 }
 
 html, body {
-    height: 90vh; /* fallback */
-    height: calc(var(--vh, 1vh) * 90); /* to use only the actual parts available */
-    min-height: -webkit-fill-available; /* this is an iOS fix */
-    min-height: 500px; /* and these are for minimum scren size, 800x600 monitors */
-    min-width: 750px; 
-    background-color: antiquewhite;
     margin: 0 auto;
-
     color: var(--color3);
     background-color: var(--color6);
     border-color: var(--color2);
 }
+
+/* /\ Generic stuff /\ */
+
+/* \/ Layout \/ */
 
 .base {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 5%;
-}
-
-.title {
-    text-align: center;
-    color: var(--color1);
-    margin-bottom: 10px;
 }
 
 .main {
@@ -55,6 +48,24 @@ html, body {
     padding: 5px 10px 5px 10px;
 }
 
+.border-focus {
+    border: 1px solid var(--color2);
+}
+
+.hidden {
+    display: none;
+}
+
+/* /\ Layout /\ */
+
+/* \/ Typography \/ */
+
+.title {
+    text-align: center;
+    color: var(--color1);
+    margin-bottom: 10px;
+}
+
 .text1 {
     color: var(--color2);
     font-weight: 400;
@@ -69,12 +80,18 @@ html, body {
     font-weight: bold;
 }
 
-.result {
-    font-size: large;
+/* /\ Typography /\ */
+
+/* \/ Overriding Bootstrap \/ */
+
+.form-control:focus {
+    border-color: var(--color3);
+    box-shadow: 0 0 0 0.25rem var(--color4);  
 }
 
-.border-focus {
-    border: 1px solid var(--color2);
+.form-select:focus {
+    border-color: var(--color3);
+    box-shadow: 0 0 0 0.25rem var(--color4);
 }
 
 .btn-overlay, .btn-overlay:hover {
@@ -83,11 +100,92 @@ html, body {
     color: var(--color5);
 }
 
-.btn-overlay:hover {
+.btn-overlay:hover, .btn-overlay:active {
     background-color: var(--color2);
     border-color: var(--color3);
     color: var(--color6);
 }
+
+.btn-overlay:focus {
+    background-color: var(--color2);
+    border-color: var(--color3);
+    color: var(--color6);
+    box-shadow: 0 0 0 0.25rem var(--color4);
+}
+
+.form-check-input:checked {
+    background-color: var(--color2);
+    border-color: var(--color2);
+}
+
+.form-check-input:focus {
+    border-color: var(--color3);
+    box-shadow: 0 0 0 0.25rem var(--color4);
+}
+
+/* /\ Overriding Bootstrap /\ */
+
+/* \/ Dice results \/ */
+
+.dice-result {
+    background-color: var(--color2);
+    border-color: var(--color1);
+    color: var(--color5);
+    font-weight: bold;
+    width: 10%;
+    font-size: 14px;
+    padding: 6px 12px;
+    margin: 5px 5px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.badge {
+    font-weight: normal;
+}
+
+.criticalHigh {
+    background-color: lightgreen;
+    color: #36213E; /* color1 */
+    font-weight: bolder;
+}
+
+.criticalLow {
+    background-color: lightcoral;
+    color: #36213E; /* color1 */
+    font-weight: bolder;
+}
+
+.dropped {
+    background-color: #d9e2ef;
+    color: grey;
+    font-weight: normal;
+    border-color: var(--color1);
+}
+
+.total {
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: var(--color6);
+    border-color: var(--color1);
+    color: var(--color1);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    width: 20%;
+    padding: 6px 12px;
+    margin: 5px 5px;
+    display: inline-block;
+    touch-action: manipulation;
+    border-radius: 10px;
+}
+
+/* /\ Dice results /\ */
 
 .test {
     border: 1px;
