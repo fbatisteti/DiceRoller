@@ -1,58 +1,10 @@
-function formatResults(result) {
-    let html = 'Original rolls: '
-
-    result.originalRolls.forEach(result => {
-        html = html.concat(`<b>${result}</b>, `);
-    });
-
-    html = html.slice(0, -2);
-
-    if (showRerolled || showAllRolls) {
-        html = html.concat(` <br>  Re-rolls: `);
-
-        result.rerolls.forEach(result => {
-            html = html.concat(`<b>${result}</b>, `);
-        });
-
-        html = html.slice(0, -2);
-    };
-
-    if (showDropped || showAllRolls) {
-        html = html.concat(` <br> Keeps: `);
-
-        result.keeps.forEach(result => {
-            html = html.concat(`<b>${result}</b>, `);
-        });
-
-        html = html.slice(0, -2);
-    };
-
-    if (showDropped || showAllRolls) {
-        html = html.concat(` <br> Drops: `);
-
-        result.drops.forEach(result => {
-            html = html.concat(`<b>${result}</b>, `);
-        });
-
-        html = html.slice(0, -2);
-    };
-
-    html = html.concat(` <br> Final results: `);
-
-    result.finalRolls.forEach(result => {
-        html = html.concat(`<b>${result}</b>, `);
-    });
-
-    return html.slice(0, -2);
-};
-
-function formatResults2(result, faces, modType, modNum) {
+function formatResults(result, faces, modType, modNum) {
     let html = '';
     let total = 0;
 
     for (let i = 0; i < result.finalRolls.length; i++) {
         let critical = checkCritical(result.finalRolls[i], faces);
-        let reroll = checkReroll(result.originalRolls[i]);
+        let reroll = checkReroll(result.originalRolls[i], result.finalRolls[i]);
         let dropped = checkKeepDrop(result.keeps[i], result.drops[i]);
 
         html = html.concat(`
@@ -95,10 +47,10 @@ function checkCritical(roll, faces) {
     return "";
 };
 
-function checkReroll(roll) {
+function checkReroll(roll, original) {
     let html = '';
 
-    if (showRerolled || showAllRolls) {
+    if ((showRerolled || showAllRolls) && (roll != original)) {
         html = html.concat(`
             <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-secondary">
                 ${roll}
