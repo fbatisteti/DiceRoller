@@ -71,7 +71,7 @@ function rollTheDice() {
         let result = rollDice(rollLine.diceToRoll, rollLine.faces, rollLine.kh, rollLine.kl, rollLine.dh, rollLine.dl, rollLine.ro, rollLine.ru);
 
         document.getElementById('result').classList.add("result");
-        document.getElementById('result').innerHTML = formatResults2(result, faces, modType, modNum);
+        document.getElementById('result').innerHTML = formatResults(result, faces, modType, modNum);
     }
 
     return;
