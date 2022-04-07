@@ -1,12 +1,12 @@
 /* \/ Generic stuff \/ */
 
 :root {
-    --color1: #36213E;
-    --color2: #554971;
-    --color3: #63768D;
-    --color4: #8AC6D0;
-    --color5: #B8F3FF;
-    --color6: #f5f5f5;  
+    --color1: #2A2164; /* #A6A6F0; */
+    --color2: #4D467B; /* #8B8BC6; */
+    --color3: #706B93; /* #6F6F9C; */
+    --color4: #938FAA; /* #545471; */
+    --color5: #B6B4C2; /* #383847; */
+    --color6: #D9D9D9; /* #1D1D1D; */ 
 }
 
 html, body {
@@ -24,7 +24,6 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5%;
 }
 
 .main {
@@ -46,10 +45,6 @@ html, body {
 
 .box {
     padding: 5px 10px 5px 10px;
-}
-
-.border-focus {
-    border: 1px solid var(--color2);
 }
 
 .hidden {
@@ -84,33 +79,56 @@ html, body {
 
 /* \/ Overriding Bootstrap \/ */
 
+.form-control, .form-select {
+    background-color: var(--color6);
+    border: 1px solid var(--color3);
+    color: var(--color1);
+}
+
+.form-control:disabled, .form-select:disabled {
+    background-color: var(--color5);
+    border: 1px solid var(--color3);
+    color: var(--color1);
+}
+
 .form-control:focus {
+    background-color: var(--color6);
     border-color: var(--color3);
     box-shadow: 0 0 0 0.25rem var(--color4);  
+    color: var(--color1);
 }
 
 .form-select:focus {
     border-color: var(--color3);
     box-shadow: 0 0 0 0.25rem var(--color4);
+    color: var(--color1);
 }
 
 .btn-overlay, .btn-overlay:hover {
     background-color: var(--color1);
     border-color: var(--color2);
-    color: var(--color5);
+    color: var(--color6);
+    font-weight: bold;
 }
 
-.btn-overlay:hover, .btn-overlay:active {
+.btn-overlay:focus, .btn-overlay:active {
     background-color: var(--color2);
     border-color: var(--color3);
     color: var(--color6);
-}
-
-.btn-overlay:focus {
-    background-color: var(--color2);
-    border-color: var(--color3);
-    color: var(--color6);
+    font-weight: bolder;
     box-shadow: 0 0 0 0.25rem var(--color4);
+}
+
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem var(--color4);
+}
+
+.form-switch .form-check-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23706B93'/%3e%3c/svg%3e");
+}
+
+.form-switch .form-check-input:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23706B93'/%3e%3c/svg%3e");
 }
 
 .form-check-input:checked {
@@ -129,8 +147,7 @@ html, body {
 
 .dice-result {
     background-color: var(--color2);
-    border-color: var(--color1);
-    color: var(--color5);
+    color: var(--color6);
     font-weight: bold;
     width: 10%;
     font-size: 14px;
@@ -141,8 +158,9 @@ html, body {
     white-space: nowrap;
     vertical-align: middle;
     touch-action: manipulation;
-    border: 1px solid transparent;
+    border: 3px solid;
     border-radius: 10px;
+    border-color: var(--color2);
 }
 
 .badge {
@@ -151,38 +169,29 @@ html, body {
 
 .criticalHigh {
     background-color: lightgreen;
-    color: #36213E; /* color1 */
+    color: #36213E; /* light theme color1 */
     font-weight: bolder;
 }
 
 .criticalLow {
     background-color: lightcoral;
-    color: #36213E; /* color1 */
+    color: #36213E; /* light theme color1 */
     font-weight: bolder;
 }
 
 .dropped {
-    background-color: #d9e2ef;
-    color: grey;
+    background-color: var(--color6);
+    color: var(--color3);
     font-weight: normal;
-    border-color: var(--color1);
 }
 
 .total {
     font-size: x-large;
     font-weight: bolder;
-    background-color: var(--color6);
+    background-color: var(--color5);
     border-color: var(--color1);
     color: var(--color1);
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
     width: 20%;
-    padding: 6px 12px;
-    margin: 5px 5px;
-    display: inline-block;
-    touch-action: manipulation;
-    border-radius: 10px;
 }
 
 /* /\ Dice results /\ */

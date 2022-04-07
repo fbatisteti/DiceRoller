@@ -15,15 +15,21 @@ function setUseRollCommand() {
     useRollCommand = document.getElementById("useRollCommand").checked;
 
     if (useRollCommand) {
-        document.getElementById("rollCommand").removeAttribute('disabled')
-        document.getElementById("setup").classList.remove("border-focus")
-        document.getElementById("rollCommand").classList.add("border-focus")
+        document.getElementById("rollCommand").removeAttribute('disabled');
+
+        let fields = document.getElementsByName("setup");
+        fields.forEach(field => {
+            field.setAttribute('disabled', 'disabled');
+        });
     } else {
-        document.getElementById("rollCommand").setAttribute('disabled', 'disabled')
-        document.getElementById("setup").classList.add("border-focus")
-        document.getElementById("rollCommand").classList.remove("border-focus")
-    }
-}
+        document.getElementById("rollCommand").setAttribute('disabled', 'disabled');
+
+        let fields = document.getElementsByName("setup");
+        fields.forEach(field => {
+            field.removeAttribute('disabled');
+        });
+    };
+};
 
 function applyValues() {
     diceToRoll = (document.getElementById('diceToRoll').value >= 1) ? document.getElementById('diceToRoll').value : 1;
@@ -58,7 +64,7 @@ function rollTheDice() {
         applyValues();
 
         document.getElementById('rollCommand').value = diceToRoll + faces + keepType + keepNum + dropType + dropNum + rerollType + rerollNum + modType + modNum;
-    }
+    };
   
     let rollLine = breakRollString(document.getElementById('rollCommand').value);
 
@@ -72,7 +78,7 @@ function rollTheDice() {
 
         document.getElementById('result').classList.add("result");
         document.getElementById('result').innerHTML = formatResults(result, faces, modType, modNum);
-    }
+    };
 
     return;
 };

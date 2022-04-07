@@ -1,5 +1,5 @@
 function formatResults(result, faces, modType, modNum) {
-    let html = '';
+    let html = '<hr>';
     let total = 0;
 
     for (let i = 0; i < result.finalRolls.length; i++) {
@@ -21,14 +21,15 @@ function formatResults(result, faces, modType, modNum) {
         total = (modType == "+") ? (total + parseInt(modNum)) : (total - parseInt(modNum));
     }
 
-    html = html.concat(`
-        <hr>
-        <div class="dice-result total center">
+    let print = `
+         <div class="dice-result total center">
             ${total}
         </div>
-    `);
+    `;
+
+    print = print.concat(html);
     
-    return html;
+    return print;
 };
 
 function checkCritical(roll, faces) {
