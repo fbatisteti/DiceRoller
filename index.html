@@ -13,26 +13,29 @@
 </head>
 <body>
 
-    <div class="base">
-
+    <div class="base vw-100 vh-100">
         <div class="container-sm main">
-
             <div class="container">
-
                 <div class="row">
                     <div class="title">
                         <h1>Dice Roller</h1>
                     </div>
                 </div>
-    
+
                 <div class="row">
                     <div class="container-sm inline">
+
+<!-- ----- ----- ----- ----- TITLE ----- ----- ----- ----- -->
+<!-- ----- ----- ----- ----- LEFT SIDE PANEL ----- ----- ----- ----- -->
+
                         <div class="col-3 box">
                             Coming soon
                         </div>
 
-                        <div class="col-6 box">
+<!-- ----- ----- ----- ----- LEFT SIDE PANEL ----- ----- ----- ----- -->
+<!-- ----- ----- ----- ----- MIDDLE PANEL ----- ----- ----- ----- -->
 
+                        <div class="col-6 box">
                             <div class="row">
                                 <div class="mb-3">
                                     <label for="rollCommand" class="form-label">
@@ -51,11 +54,11 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <input type="number" min="1" class="form-control" id="diceToRoll" aria-describedby="diceToRollHelp" placeholder="1" >
+                                            <input type="number" min="1" class="form-control" id="diceToRoll" aria-describedby="diceToRollHelp" placeholder="1" name="setup">
                                         </div> 
 
                                         <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="faces">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="faces" name="setup">
                                                 <option value="20" selected>d20</option>
                                                 <option value="2">d2 (Coin)</option>
                                                 <option value="4">d4</option>
@@ -78,14 +81,14 @@
                                         </div>
 
                                         <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="rerollType">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="rerollType" name="setup">
                                                 <option value="ru" selected>Under</option>
                                                 <option value="ro">Over</option>
                                             </select>
                                         </div>  
 
                                         <div class="col-2">
-                                            <input type="number" min="0" class="form-control" id="rerollNum" aria-describedby="rerollHelp" placeholder="0">
+                                            <input type="number" min="0" class="form-control" id="rerollNum" aria-describedby="rerollHelp" placeholder="0" name="setup">
                                         </div> 
 
                                         <div class="col-5">
@@ -99,11 +102,11 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <input type="number" min="0" class="form-control" id="keepNum" aria-describedby="keepNumHelp" placeholder="0">
+                                            <input type="number" min="0" class="form-control" id="keepNum" aria-describedby="keepNumHelp" placeholder="0" name="setup">
                                         </div> 
 
                                         <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="keepType">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="keepType" name="setup">
                                                 <option value="kh" selected>Highest</option>
                                                 <option value="kl">Lowest</option>
                                             </select>
@@ -120,11 +123,11 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <input type="number" min="0" class="form-control" id="dropNum" aria-describedby="dropNumHelp" placeholder="0">
+                                            <input type="number" min="0" class="form-control" id="dropNum" aria-describedby="dropNumHelp" placeholder="0" name="setup">
                                         </div> 
 
                                         <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="dropType">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="dropType" name="setup">
                                                 <option value="dh" selected>Highest</option>
                                                 <option value="dl">Lowest</option>
                                             </select>
@@ -141,21 +144,20 @@
                                         </div>
 
                                         <div class="col-3">
-                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="modType">
+                                            <select class="form-select form-select-sm text2" aria-label=".form-select-sm" id="modType" name="setup">
                                                 <option value="+" selected>Add</option>
                                                 <option value="-">Subtract</option>
                                             </select>
                                         </div>  
 
                                         <div class="col-2">
-                                            <input type="number" min="0" class="form-control" id="modNum" aria-describedby="modHelp" placeholder="0">
+                                            <input type="number" min="0" class="form-control" id="modNum" aria-describedby="modHelp" placeholder="0" name="setup">
                                         </div> 
 
                                         <div class="col-5">
                                             <div id="modHelp" class="form-text text2">Add/subtract N to/from final results</div>
                                         </div>  
                                     </div>
-
                                 </div>
                             </div>
 
@@ -191,8 +193,10 @@
                             <div class="row" style="padding: 10px">
                                 <div class="title" style="margin-bottom: 0px;" id="result"></div>
                             </div>
-
                         </div>
+
+<!-- ----- ----- ----- ----- MIDDLE PANEL ----- ----- ----- ----- -->
+<!-- ----- ----- ----- ----- RIGHT SIDE PANEL ----- ----- ----- ----- -->
 
                         <div class="col-3 box">
                             <div class="row">
@@ -202,6 +206,11 @@
                             </div>
 
                             <div clas="row">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="darkMode" onchange="setDarkMode()">
+                                    <label class="form-check-label" for="darkMode" id="darkModeHelp">Dark mode</label>
+                                </div>
+
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" id="showAllRolls" onchange="setShowAllRolls()" checked>
                                     <label class="form-check-label text1" for="showDroppped" id="showAllRollsHelp">Show all rolls</label>
@@ -259,11 +268,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <script src="js/main.js"></script>

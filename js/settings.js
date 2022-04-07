@@ -1,17 +1,3 @@
-// First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-let vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-// We listen to the resize event
-window.addEventListener('resize', () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
-
-// Took the part above somewhere I can't find anymore... it's for ressizing everything
-
 let showAllRolls = true;
 let showDropped = false;
 let showRerolled = false;
@@ -98,3 +84,26 @@ function setKeepDrop() {
         dropNum = 0;
     };
 };
+
+let darkMode = false;
+
+function setDarkMode() {
+    darkMode = document.getElementById("darkMode").checked;
+
+    if (darkMode) {
+        document.documentElement.style.setProperty('--color1', '#A6A6F0');
+        document.documentElement.style.setProperty('--color2', '#8B8BC6');
+        document.documentElement.style.setProperty('--color3', '#6F6F9C');
+        document.documentElement.style.setProperty('--color4', '#545471');
+        document.documentElement.style.setProperty('--color5', '#383847');
+        document.documentElement.style.setProperty('--color6', '#1D1D1D');
+    } else {
+        document.documentElement.style.setProperty('--color1', '#2A2164');
+        document.documentElement.style.setProperty('--color2', '#4D467B');
+        document.documentElement.style.setProperty('--color3', '#706B93');
+        document.documentElement.style.setProperty('--color4', '#938FAA');
+        document.documentElement.style.setProperty('--color5', '#B6B4C2');
+        document.documentElement.style.setProperty('--color6', '#D9D9D9');
+    };
+};
+
