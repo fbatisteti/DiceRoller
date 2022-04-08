@@ -1,5 +1,8 @@
 function formatResults(result, faces, modType, modNum) {
-    let html = '<hr>';
+    let html = `
+        <hr>
+        <div class="dice-tower">
+    `;
     let total = 0;
 
     for (let i = 0; i < result.finalRolls.length; i++) {
@@ -27,8 +30,16 @@ function formatResults(result, faces, modType, modNum) {
         </div>
     `;
 
-    print = print.concat(html);
+    // check minimum window height (about 700px)
+    if (window.innerHeight >= 700) {
+        print = print.concat(html);
+    }
+
+    print = print.concat(`</div>`);
     
+    // prepare the .total css class
+    document.documentElement.style.setProperty('--totalSize', `${total.length}ch`);
+
     return print;
 };
 
