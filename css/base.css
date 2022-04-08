@@ -28,7 +28,7 @@ html, body {
 .container-fluid {
     width: 98%;
     height: 98%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .main {
@@ -170,6 +170,59 @@ html, body {
     border-color: var(--color2);
 }
 
+.dice-tower {
+    max-height: 150px; /* fallback */
+    max-height: calc(var(--vhDiceTower, 1vh) * 95 - var(--offsetDiceTower, 150px));
+    overflow-y: auto;
+    border: 1px dotted;
+    border-color: var(--color2);
+}
+
+.history {
+    max-height: 500px; /* fallback */
+    max-height: calc(var(--vhHistory, 1vh) * 97 - var(--offsetHistory, 150px));
+    overflow-y: auto;
+}
+
+.history-entry {
+    margin: 0 5px 10px 0;
+}
+
+.history-result {
+    background-color: var(--color2);
+    color: var(--color6);
+    font-weight: bold;
+    width: 20%;
+    font-size: 14px;
+    margin: 5px 5px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    border: 3px solid;
+    border-radius: 10px;
+    border-color: var(--color2);
+}
+
+.history-tower {
+    overflow-y: auto;
+    border: 1px dotted;
+    border-color: var(--color2);
+    display: inline-flexbox;
+
+}
+
+.total {
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: var(--color5);
+    border-color: var(--color1);
+    color: var(--color1);
+    width: calc(var(--totalSize));
+    padding: 0 10px 0 10px;
+}
+
 .badge {
     font-weight: normal;
 }
@@ -190,24 +243,6 @@ html, body {
     background-color: var(--color6);
     color: var(--color3);
     font-weight: normal;
-}
-
-.total {
-    font-size: x-large;
-    font-weight: bolder;
-    background-color: var(--color5);
-    border-color: var(--color1);
-    color: var(--color1);
-    width: calc(var(--totalSize));
-    padding: 0 10px 0 10px;
-}
-
-.dice-tower {
-    max-height: 150px; /* fallback */
-    max-height: calc(var(--vh, 1vh) * 97 - var(--offset, 150px));
-    overflow-y: scroll;
-    border: 1px dotted;
-    border-color: var(--color2);
 }
 
 /* /\ Dice results /\ */

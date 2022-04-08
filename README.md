@@ -11,7 +11,7 @@ Minimum screen size suggested is 710px high.
 
 ### 2022-04-08
 Updates on responsiveness (read "Note 1" below)
-Minor rewritting on left panel (now called "History")
+Added functionality to left panel (now called "History")
 
 ### 2022-04-07
 Dark mode added <br />
