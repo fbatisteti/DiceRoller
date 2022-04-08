@@ -91,7 +91,7 @@ function toggleDetail(string) {
 };
 
 function handleRessize() {
-    let width = window.innerWidth * 0.01;
+    let width = window.innerWidth;
 
     // reset to default
     if (width >= 768) {
