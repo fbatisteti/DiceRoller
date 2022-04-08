@@ -78,7 +78,6 @@ function rollTheDice() {
 
         setDiceTowerHeight();
 
-        document.getElementById('result').classList.add("result");
         document.getElementById('result').innerHTML = formatResults(result, faces, modType, modNum);
     };
 
@@ -98,9 +97,11 @@ function handleRessize() {
         document.getElementById('setupScreen').classList.value = 'col d-block';
         document.getElementById('historyScreen').classList.value = 'col-3 d-none d-md-block';
         document.getElementById('settingsScreen').classList.value = 'col-3 d-none d-md-block';
+        callRoller();
     };
 
     setDiceTowerHeight();
+    setHistoryHeight();
 };
 
 function removeOrder(div) {
@@ -175,6 +176,16 @@ function setDiceTowerHeight() {
 
     offset = document.getElementById("setupBlock").offsetHeight + document.getElementById("titleBlock").offsetHeight + 100;
 
-    document.documentElement.style.setProperty('--vh', `${viewport}px`);
-    document.documentElement.style.setProperty('--offset', `${offset}px`);
+    document.documentElement.style.setProperty('--vhDiceTower', `${viewport}px`);
+    document.documentElement.style.setProperty('--offsetDiceTower', `${offset}px`);
+};
+
+function setHistoryHeight() {
+    let viewport = window.innerHeight * 0.01;
+    let offset = 0;
+
+    offset = document.getElementById("historyHeader").offsetHeight + document.getElementById("titleBlock").offsetHeight + 50;
+
+    document.documentElement.style.setProperty('--vhHistory', `${viewport}px`);
+    document.documentElement.style.setProperty('--offsetHistory', `${offset}px`);
 };

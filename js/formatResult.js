@@ -1,3 +1,5 @@
+let historyArray = [];
+
 function formatResults(result, faces, modType, modNum) {
     let html = `
         <hr>
@@ -25,19 +27,38 @@ function formatResults(result, faces, modType, modNum) {
     }
 
     let print = `
-         <div class="dice-result total center">
+        <div class="dice-result total">
             ${total}
         </div>
     `;
 
+    // save to history
+    let saveToHistory = `
+        <div class="history-entry">
+            <div class="text2">
+               <b>${document.getElementById('rollCommand').value}</b>
+            </div>
+    `;
+    saveToHistory = saveToHistory.concat(print);
+    saveToHistory = saveToHistory.concat(html);
+    saveToHistory = saveToHistory.concat(`</div></div>`);
+    saveToHistory = saveToHistory.replaceAll("dice","history");
+    saveToHistory = saveToHistory.replaceAll("<hr>","");
+    historyArray.push(saveToHistory);
+
+    document.getElementById('history').innerHTML = ''
+    for (let i = historyArray.length - 1; i >= 0; i--) {
+        document.getElementById('history').innerHTML = document.getElementById('history').innerHTML.concat(historyArray[i]);
+    };
+
     // check minimum window height (about 700px)
     if (window.innerHeight >= 700) {
         print = print.concat(html);
-    }
+    };
 
     print = print.concat(`</div>`);
     
-    // prepare the .total css class
+    // prepare the .total css class to fit the final number
     document.documentElement.style.setProperty('--totalSize', `${total.length}ch`);
 
     return print;
