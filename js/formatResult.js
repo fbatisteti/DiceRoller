@@ -33,7 +33,12 @@ function formatResults(result, faces, modType, modNum) {
     `;
 
     // save to history
-    let saveToHistory = `<div class="history-entry">`;
+    let saveToHistory = `
+        <div class="history-entry">
+            <div class="text2">
+               <b>${document.getElementById('rollCommand').value}</b>
+            </div>
+    `;
     saveToHistory = saveToHistory.concat(print);
     saveToHistory = saveToHistory.concat(html);
     saveToHistory = saveToHistory.concat(`</div></div>`);
